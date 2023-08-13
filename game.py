@@ -1,76 +1,70 @@
-from random import *
+from random import choice
 
+class Game:
 
-class Juego:
-
-    # Creamos el constructor
     def __init__(self):
-        self.vidas = 6
-        self.letras_correctas = []
-        self.letras_incorrectas = []
-        self.palabras = ['perro', 'carretera', 'python']
-        self.letra = ''
-        self.palabra = ''
+        self.lives = 6
+        self.correct_letters = []
+        self.incorrect_letters = []
+        self.words = ['javascript', 'django', 'python']
+        self.letter = ''
+        self.word = ''
 
-    def seleccionar_palabra(self, palabras):
-        self.palabra = choice(palabras)
-        return self.palabra
+    def select_word(self, words):
+        self.word = choice(words)
+        return self.word
 
-    def elegir_letra(self):
-        letra_correcta = False
-        while not letra_correcta:
-            self.letra = input('Elige una letra:\n').lower()
-            if len(self.letra) != 1:
-                print('Elige solo una letra o no lo dejes en blanco!')
-            elif not self.letra.isalpha():
-                print('Solo puede escribir letras!')
-            elif self.letra in self.letras_correctas or self.letra in self.letras_incorrectas:
-                print('Ya has llamado esta letra! Escoge otra!')
+    def choose_letter(self):
+        correct_letter = False
+        while not correct_letter:
+            self.letter = input('Choose a letter:\n').lower()
+            if len(self.letter) != 1:
+                print('Choose only one letter or do not leave it blank!')
+            elif not self.letter.isalpha():
+                print('You can only write letters!')
+            elif self.letter in self.correct_letters or self.letter in self.incorrect_letters:
+                print('You have already called this letter! Choose another!')
             else:
-                letra_correcta = True
+                correct_letter = True
+        return self.letter
 
-        return self.letra
-
-    def comprobar_letra(self, letra, palabra):
-        if letra in palabra:
-            print('\nMuy bien!')
-            self.letras_correctas.append(letra)
+    def check_letter(self, letter, word):
+        if letter in word:
+            print('\nWell done!')
+            self.correct_letters.append(letter)
         else:
-            self.vidas -= 1
-            print(f'\nLa palabra no contiene esta letra.\nTe quedan {self.vidas} vidas!')
-            self.letras_incorrectas.append(letra)
+            self.lives -= 1
+            print(f'\nThe word does not contain this letter.\nYou have {self.lives} lives left!')
+            self.incorrect_letters.append(letter)
 
-    def grafico_juego(self):
-        grafico = []
-        for letra in self.palabra:
-            if letra in self.letras_correctas:
-                grafico.append(letra)
+    def game_graphics(self):
+        graphics = []
+        for letter in self.word:
+            if letter in self.correct_letters:
+                graphics.append(letter)
             else:
-                grafico.append('_')
-        print("".join(grafico) + '\n')
-        return grafico
+                graphics.append('_')
+        print("".join(graphics) + '\n')
+        return graphics
 
+start = Game()
+start.word = start.select_word(start.words)
+length = len(start.word)
 
-start = Juego()
-start.palabra = start.seleccionar_palabra(start.palabras)
-largo = len(start.palabra)
+print(f'''\nWelcome to the Hangman game!!! Let's start!!!\n
+The word is composed of {length} letters\n''')
+spacing = '*' * 50 + '\n'
+print(spacing)
 
-print(f'''\nBinenvenido al juego del ahorcado!!! Comenzamos!!!\n
-La lapalabra se compone de {largo} letras\n''')
-espaciado = '*'*50+'\n'
-print(espaciado)
+while start.lives > 0:
+    start.letter = start.choose_letter()
+    start.check_letter(start.letter, start.word)
+    game_progress = start.game_graphics()
+    print(spacing)
 
-while start.vidas > 0:
-    start.letra = start.elegir_letra()
-    start.comprobar_letra(start.letra, start.palabra)
-    evolucio_juego = start.grafico_juego()
-    print(espaciado)
-
-    if "".join(evolucio_juego) == start.palabra:
-        print('Felicidades! Has adivinado la palabra!!!')
+    if "".join(game_progress) == start.word:
+        print('Congratulations! You have guessed the word!!!')
         break
-
 else:
-    print(f'Game over! La palabra oculta era "{start.palabra}"!')
-
+    print(f'Game over! The hidden word was "{start.word}"!')
 
