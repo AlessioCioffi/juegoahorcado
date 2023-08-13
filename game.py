@@ -47,24 +47,24 @@ class Game:
         print("".join(graphics) + '\n')
         return graphics
 
-start = Game()
-start.word = start.select_word(start.words)
-length = len(start.word)
+play = Game()
+play.word = play.select_word(play.words)
+length = len(playt.word)
 
 print(f'''\nWelcome to the Hangman game!!! Let's start!!!\n
 The word is composed of {length} letters\n''')
 spacing = '*' * 50 + '\n'
 print(spacing)
 
-while start.lives > 0:
-    start.letter = start.choose_letter()
-    start.check_letter(start.letter, start.word)
-    game_progress = start.game_graphics()
+while play.lives > 0:
+    play.letter = play.choose_letter()
+    play.check_letter(play.letter, play.word)
+    game_progress = play.game_graphics()
     print(spacing)
 
-    if "".join(game_progress) == start.word:
+    if "".join(game_progress) == play.word:
         print('Congratulations! You have guessed the word!!!')
         break
 else:
-    print(f'Game over! The hidden word was "{start.word}"!')
+    print(f'Game over! The hidden word was "{play.word}"!')
 
