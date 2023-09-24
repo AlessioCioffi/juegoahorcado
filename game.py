@@ -49,7 +49,7 @@ class Game:
 
 play = Game()
 play.word = play.select_word(play.words)
-length = len(playt.word)
+length = len(play.word)
 
 print(f'''\nWelcome to the Hangman game!!! Let's start!!!\n
 The word is composed of {length} letters\n''')
